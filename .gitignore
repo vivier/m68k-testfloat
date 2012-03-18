@@ -1,0 +1,5 @@
+*.o
+testfloat/*/testsoftfloat
+testfloat/*/testfloat
+/softfloat
+cscope.out
