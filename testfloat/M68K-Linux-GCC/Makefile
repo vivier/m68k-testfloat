@@ -14,7 +14,7 @@ LINK = gcc -lm -g -o $@
 SOFTFLOAT_H = $(SOFTFLOAT_DIR)/softfloat.h
 SOFTFLOAT_OBJ = $(SOFTFLOAT_DIR)/softfloat$(OBJ)
 
-ALL: testsoftfloat$(EXE) testfloat$(EXE)
+ALL: testsoftfloat$(EXE) testfloat$(EXE) timefloat$(EXE)
 
 clean:
 	rm -f *.o testfloat$(EXE) testsoftfloat$(EXE)
@@ -68,3 +68,8 @@ testfloat$(OBJ): milieu.h ../fail.h $(SOFTFLOAT_H) ../testCases.h ../testLoops.h
 testfloat$(EXE): fail$(OBJ) random$(OBJ) $(SOFTFLOAT_OBJ) testCases$(OBJ) writeHex$(OBJ) testLoops$(OBJ) systmodes$(OBJ) systflags$(OBJ) systfloat$(OBJ) testFunction$(OBJ) testfloat$(OBJ)
 	$(LINK) fail$(OBJ) random$(OBJ) $(SOFTFLOAT_OBJ) testCases$(OBJ) writeHex$(OBJ) testLoops$(OBJ) systmodes$(OBJ) systflags$(OBJ) systfloat$(OBJ) testFunction$(OBJ) testfloat$(OBJ)
 
+timefloat$(OBJ): ../timefloat.c
+	$(COMPILE_C) ../timefloat.c
+
+timefloat$(EXE): timefloat$(OBJ) systfloat$(OBJ) systmodes$(OBJ)
+	$(LINK) timefloat$(OBJ) systfloat$(OBJ) systmodes$(OBJ)
