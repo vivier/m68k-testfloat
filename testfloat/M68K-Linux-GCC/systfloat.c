@@ -61,6 +61,16 @@ floatx80 syst_int32_to_floatx80( int32 a )
 
 }
 
+int32 syst_float32_to_int32( float32 a )
+{
+    int32 z;
+
+    asm("fmoves %1, %%fp0\n"
+        "fmovel %%fp0,%0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
+}
+
 float64 syst_float32_to_float64( float32 a )
 {
     float64 z;
@@ -81,6 +91,16 @@ floatx80 syst_float32_to_floatx80( float32 a )
 
     return z;
 
+}
+
+float32 syst_float32_round_to_int( float32 a)
+{
+    float32 z;
+
+    asm("fints %1, %%fp0\n"
+        "fmoves %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
 }
 
 float32 syst_float32_add( float32 a, float32 b )
@@ -131,6 +151,27 @@ float32 syst_float32_div( float32 a, float32 b )
 
 }
 
+float32 syst_float32_rem( float32 a, float32 b)
+{
+    float32 z;
+
+    asm("fmoves %1,%%fp0\n"
+        "frems %2,%%fp0\n"
+        "fmoves %%fp0, %0\n" :"=m" (z) : "m" (a), "m" (b) : "fp0" );
+
+    return z;
+}
+
+float32 syst_float32_sqrt( float32 a )
+{
+    float64 z;
+
+    asm("fsqrts %1,%%fp0\n"
+	"fmoves %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
+}
+
 flag syst_float32_eq( float32 a, float32 b )
 {
 
@@ -149,6 +190,17 @@ flag syst_float32_lt( float32 a, float32 b )
 {
 
     return ( *( (float *) &a ) < *( (float *) &b ) );
+
+}
+
+int32 syst_float64_to_int32( float64 a )
+{
+    int32 z;
+
+    asm("fmoved %1, %%fp0\n"
+        "fmovel %%fp0,%0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
 
 }
 
@@ -172,6 +224,16 @@ floatx80 syst_float64_to_floatx80( float64 a )
 
     return z;
 
+}
+
+float64 syst_float64_round_to_int( float64 a)
+{
+    float64 z;
+
+    asm("fintd %1, %%fp0\n"
+        "fmoved %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
 }
 
 float64 syst_float64_add( float64 a, float64 b )
@@ -222,6 +284,18 @@ float64 syst_float64_div( float64 a, float64 b )
 
 }
 
+float64 syst_float64_rem( float64 a, float64 b )
+{
+    float64 z;
+
+    asm("fmoved %1, %%fp0\n"
+        "fremd %2,%%fp0\n"
+	"fmoved %%fp0, %0\n" : "=m" (z) : "m" (a), "m" (b) : "fp0" );
+
+    return z;
+
+}
+
 float64 syst_float64_sqrt( float64 a )
 {
     float64 z;
@@ -230,7 +304,6 @@ float64 syst_float64_sqrt( float64 a )
 	"fmoved %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
 
     return z;
-
 }
 
 flag syst_float64_eq( float64 a, float64 b )
@@ -254,6 +327,16 @@ flag syst_float64_lt( float64 a, float64 b )
 
 }
 
+int32 syst_floatx80_to_int32( floatx80 a )
+{
+    int32 z;
+
+    asm("fmovex %1, %%fp0\n"
+        "fmovel %%fp0,%0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
+}
+
 float32 syst_floatx80_to_float32( floatx80 a )
 {
     float32 z;
@@ -274,6 +357,16 @@ float64 syst_floatx80_to_float64( floatx80 a )
 
     return z;
 
+}
+
+floatx80 syst_floatx80_round_to_int( floatx80 a)
+{
+    floatx80 z;
+
+    asm("fintx %1, %%fp0\n"
+        "fmovex %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
 }
 
 floatx80 syst_floatx80_add( floatx80 a, floatx80 b )
@@ -322,6 +415,28 @@ floatx80 syst_floatx80_div( floatx80 a, floatx80 b )
 
     return z;
 
+}
+
+floatx80 syst_floatx80_rem( floatx80 a, floatx80 b )
+{
+    floatx80 z;
+
+    asm("fmovex %1, %%fp0\n"
+        "fremx %2,%%fp0\n"
+	"fmovex %%fp0, %0\n" : "=m" (z) : "m" (a), "m" (b) : "fp0" );
+
+    return z;
+
+}
+
+floatx80 syst_floatx80_sqrt( floatx80 a )
+{
+    floatx80 z;
+
+    asm("fsqrtx %1,%%fp0\n"
+	"fmovex %%fp0, %0\n" : "=m" (z) : "m" (a) : "fp0" );
+
+    return z;
 }
 
 flag syst_floatx80_eq( floatx80 a, floatx80 b )
