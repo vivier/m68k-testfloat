@@ -2971,6 +2971,7 @@ main( int argc, char **argv )
 "timesoftfloat [<option>...] <function>\n"
 "  <option>:  (* is default)\n"
 "    -help            --Write this message and exit.\n"
+"    -list            --List all testable functions and exit.\n"
 #ifdef FLOATX80
 "    -precision32     --Only time rounding precision equivalent to float32.\n"
 "    -precision64     --Only time rounding precision equivalent to float64.\n"
@@ -3054,6 +3055,13 @@ main( int argc, char **argv )
             functionArgument = TRUE;
             functionCode = 0;
             operands = 0;
+        }
+        else if ( strcmp( argPtr, "list" ) == 0 ) {
+            for ( functionCode = 1; functionCode < NUM_FUNCTIONS; ++functionCode
+                ) {
+                    printf( "%s\n", functions[ functionCode ].name );
+                }
+                return EXIT_SUCCESS;
         }
         else {
             for ( functionCode = 1;
