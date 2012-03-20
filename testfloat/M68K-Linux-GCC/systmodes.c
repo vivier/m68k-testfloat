@@ -60,6 +60,19 @@ Does nothing.
 */
 void syst_float_set_rounding_precision( int8 precision )
 {
-
+    int v;
+    asm("fmove.l %%fpcr, %0\n" : "=m" (v));
+    switch (precision) {
+    case 80:
+        v = ( v & ~(3<<6));
+        break;
+    case 64:
+        v = ( v & ~(3<<6)) | (2 << 6);
+        break;
+    case 32:
+        v = ( v & ~(3<<6)) | (1 << 6);
+        break;
+    }
+    asm("fmove.l %0, %%fpcr\n" : : "m" (v));
 }
 
